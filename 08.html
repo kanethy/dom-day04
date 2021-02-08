@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #d1 #d2 #d3{cursor:pointer}
+        #d1 {
+            background-color: green;
+            position: relative;
+            width: 150px;
+            height: 150px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #d2 {
+            background-color: blue;
+            position: absolute;
+            top: 25px;
+            left: 175px;
+            width: 100px;
+            height: 100px;
+        }
+
+        #d3 {
+            background-color: red;
+            position: absolute;
+            top: 25px;
+            left: 225px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        #pop{
+			position:fixed;
+			width:100px;
+			height:100px;
+			top:200px;
+			left:300px;
+			background-image:url(images/xiaoxin.gif);
+      background-size:100%;
+		}
+
+        body{height:2000px;}
+
+        #toTop{
+            position:fixed;
+            bottom:100px;
+            right:0;
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <button id="btnShoot">shoot</button><br>
+    <button id="btnAward">获得跟踪导弹</button><br>
+    <button id="btnBreak">失去跟踪导弹</button><br>
+
+    <div id="d1">
+        <div id="d2">
+            <div id="d3">
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div id="keys">
+        <button>1</button><span>*</span>
+        <button>2</button><span>*</span>
+        <button>3</button><span>*</span>
+        <button>4</button><span>*</span><br>
+        <button>C</button><span>*</span>
+        <button>+</button><span>*</span>
+        <button>-</button><span>*</span>
+        <button>=</button><span>*</span>
+    </div>
+    <textarea id="sc" style="resize:none;width:200px; height:50px;" readonly></textarea>
+    <br>
+    <hr>
+    <br>
+    <a id="a1" href="#">go to xxx</a>
+    <a id="a2" href="javascript:;">go to xxx</a>
+    <br>
+    <hr>
+    <br>
+    <div id="pop"></div>
+    <br>
+    <hr>
+    <br>
+    <div id="toTop">
+		<a href="#">返回顶部</a>
+	</div>
+    <script>
+        var btnShoot=document.getElementById("btnShoot");
+        var btnAward=document.getElementById("btnAward");
+        var btnBreak=document.getElementById("btnBreak");
+
+        btnShoot.addEventListener("click",function(){
+            console.log(`发射普通的子弹....`);
+        })
+       function shoot2(){
+            alert(`发射跟踪导弹=>=>=>`);
+        }
+        btnAward.addEventListener("click",function(){
+            btnShoot.addEventListener("click",shoot2)
+        })
+
+        btnBreak.addEventListener("click",function(){
+            btnShoot.removeEventListener("click",shoot2)
+        })
+
+
+        var d1=document.getElementById("d1");
+        var d2=document.getElementById("d2");
+        var d3=document.getElementById("d3");
+
+        d1.onclick=function(i){
+            alert(`d1疼`)
+        }
+        d2.onclick=function(i){
+            i.stopPropagation();
+            alert(`d2疼`)
+        }
+        d3.onclick=function(i){
+            i.stopPropagation();
+            alert(`d3疼`)
+        }
+
+        var div=document.getElementById("keys");
+        div.onclick=function(e){
+            if(e.target.nodeName=="BUTTON"){
+                e.target.innerHTML="❀";
+            }
+        }
+
+        var a1=document.getElementById("a1");
+        a1.onclick=function(e){
+            e.preventDefault();
+            alert("疼！");
+        }
+        var a2=document.getElementById("a2");
+        a2.onclick=function(e){
+            alert("疼！");
+        }
+
+        var pop=document.getElementById("pop");
+        pop.onclick=function(e){
+            console.log(`距离屏幕的位置x：${e.screenX}px,y：${e.screenY}px`);
+            console.log(`距离文档显示区的位置x：${e.clientX}px,y：${e.clientY}px`);
+            console.log(`距离事件所在元素的位置x：${e.offsetX}px,y：${e.offsetY}px`);
+        }
+
+
+       window.onscroll=function(){
+            var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+            console.log(scrollTop);
+            var toTop=document.getElementById("toTop");
+            if(scrollTop>=500){
+                toTop.style.display="block";
+            }else{
+                toTop.style.display="none";
+            }
+        }
+    </script>
+</body>
+</html>
